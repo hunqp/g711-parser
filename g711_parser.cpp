@@ -1,4 +1,6 @@
-#include "g711.h"
+#include "g711_parser.h"
+
+namespace g711 {
 
 static int16_t segmentEnd[8] = { 0xFF, 0x1FF, 0x3FF, 0x7FF, 0xFFF, 0x1FFF, 0x3FFF, 0x7FFF };
 
@@ -238,4 +240,6 @@ std::vector<int16_t> makePCMSoundLouderV2(uint8_t *pcmBuffer, uint32_t pcmBuffer
 	}
 
 	return amplifiedPCMBuffer;
+}
+
 }

@@ -3,7 +3,7 @@ CXXFLAGS = -Wall -Wextra -std=c++11
 
 TARGET = main
 
-SOURCES = main.cpp g711.cpp
+SOURCES = main.cpp g711_parser.cpp
 
 OBJECTS = $(SOURCES:.cpp=.o)
 
@@ -22,7 +22,7 @@ clean:
 	rm -f $(TARGET) $(OBJECTS)
 
 run: all
-	@./$(TARGET)
+	@/usr/bin/env $(TARGET)
 
 play-alaw:
 	play -t raw -r 8k -e a-law -b 8 -c 1 audio_voices.aLaw

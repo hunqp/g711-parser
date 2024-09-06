@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <vector>
 
+namespace g711 {
 /*--------------------------------------------------------------------------------/
  * ULAW, ALAW and Linear PCM conversions
  *-------------------------------------------------------------------------------*/
@@ -30,5 +31,7 @@ extern uint16_t uLawEncode(uint8_t uLawBuffer[], const int16_t pcmBuffer[], uint
 
 extern std::vector<uint8_t> makePCMSoundLouderV1(uint8_t *pcmBuffer, uint32_t pcmBufferSize, float factor = 2.7);
 extern std::vector<int16_t> makePCMSoundLouderV2(uint8_t *pcmBuffer, uint32_t pcmBufferSize, float factor = 2.7);
+
+}
 
 #endif /* __G711_H */

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include <sys/stat.h>
-#include "g711.h"
+#include "g711_parser.h"
 
 static const bool AMPLIFY_PCM = true;
 
@@ -9,8 +9,8 @@ static void pcmEncodeTest(std::string pcmURL, std::string aLawURL);
 
 int main() {
     const std::string ALAW_ROOT_URL = "audio_voices.aLaw";
-    std::string AUDIO_DECODE_URL = "audio_voices.pcm";
-    std::string AUDIO_ENCODE_URL = "audio_voices.g711a";
+    std::string AUDIO_DECODE_URL    = "audio_voices.pcm";
+    std::string AUDIO_ENCODE_URL    = "audio_voices.g711a";
 
     aLawDecodeTest(ALAW_ROOT_URL, AUDIO_DECODE_URL);
     pcmEncodeTest(AUDIO_DECODE_URL, AUDIO_ENCODE_URL);
@@ -42,10 +42,10 @@ void aLawDecodeTest(std::string aLawURL, std::string pcmURL) {
 
 	read = fread(aLawBuffer, 1, dataLen, FILE_SRC);
 	if (read) {
-		int ret = aLaw2PCM(aLawBuffer, pcmBuffer, read);
+		int ret = g711::aLaw2PCM(aLawBuffer, pcmBuffer, read);
         std::vector<uint8_t> amplifiedPCMBuffer;
         if (AMPLIFY_PCM) {
-            auto amplifiedPCMBuffer = makePCMSoundLouderV1(pcmBuffer, sizeof(pcmBuffer));
+            auto amplifiedPCMBuffer = g711::makePCMSoundLouderV1(pcmBuffer, sizeof(pcmBuffer));
             std::cout << "PCM Amplified Buffer size " << amplifiedPCMBuffer.size() << std::endl;
             memcpy(pcmBuffer, amplifiedPCMBuffer.data(), sizeof(pcmBuffer));
         }
@@ -92,7 +92,7 @@ void pcmEncodeTest(std::string pcmURL, std::string aLawURL) {
 	read = fread(aLawBuffer, 1, dataLen, FILE_SRC);
 
 	if (read) {
-		int ret = PCM2ALaw(aLawBuffer, pcmBuffer, read);
+		int ret = g711::PCM2ALaw(aLawBuffer, pcmBuffer, read);
         if (ret != G711_RC_FAILURE) {
             fwrite(pcmBuffer, 1, ret, FILE_DES);
         }	
